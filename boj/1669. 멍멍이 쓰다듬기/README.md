@@ -39,3 +39,4 @@ with open("1669.py") as f:
     content = f.read()
 
 print(content)
+```
