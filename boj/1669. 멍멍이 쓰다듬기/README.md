@@ -35,7 +35,7 @@
 <img src="./img/1669.jpg" width="60%">
 
 ```python
-with open("1669.py") as f:
+with open("./1669.py") as f:
     content = f.read()
 
 print(content)
