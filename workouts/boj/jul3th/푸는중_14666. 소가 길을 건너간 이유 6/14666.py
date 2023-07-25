@@ -1,4 +1,11 @@
+import sys
+from collections import deque
+input = sys.stdin.readline
+
 n, k, r = map(int, input().split())
+
+dx, dy = [0, 0, 1, -1], [1, -1, 0, 0]
+
 
 roads = []
 cows = []
