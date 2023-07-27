@@ -34,7 +34,7 @@ def pibonacci(n):
 
     result = pibonacci(n - 1) + pibonacci(n - pi) # p[n]의 조건
     fibs[n] = result  # 계산된 값을 메모에 저장
-    print(fibs)
+
     return result
 
 print(pibonacci(num) % 1000000000000000000)
