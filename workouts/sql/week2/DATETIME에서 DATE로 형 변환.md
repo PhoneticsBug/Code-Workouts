@@ -40,3 +40,8 @@ SQL문을 실행하면 다음과 같이 나와야 합니다.
 본 문제는 Kaggle의 "Austin Animal Center Shelter Intakes and Outcomes"에서 제공하는 데이터를 사용하였으며 ODbL의 적용을 받습니다.
 
 시각(시-분-초)을 제외한 날짜(년-월-일)만 보여주세요. ↩
+
+```sql
+-- 코드를 입력하세요
+SELECT ANIMAL_ID, NAME, DATE_FORMAT(DATETIME, '%Y-%m-%d') AS "날짜" FROM ANIMAL_INS
+```
