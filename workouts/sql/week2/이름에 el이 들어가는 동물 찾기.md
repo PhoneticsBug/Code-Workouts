@@ -33,3 +33,11 @@ ANIMAL_INS 테이블은 동물 보호소에 들어온 동물의 정보를 담은
 |-----------|----------------|
 | A355753   | Elijah          |
 | A382192   | Maxwell 2 |
+
+```sql
+-- 코드를 입력하세요
+SELECT ANIMAL_ID, 
+    NAME FROM ANIMAL_INS
+WHERE ANIMAL_TYPE = "Dog" AND NAME LIKE "%EL%"
+ORDER BY NAME ASC
+```
