@@ -2,30 +2,65 @@ import sys
 from collections import deque
 input = sys.stdin.readline
 
-m, n = map(int, input().split())
-ocean = [list(map(int, input().split())) for _ in range(m)]
+dx = [-1, -1, -1, 0, 1, 0, 1, 1]
+dy = [-1, 0, 1, 1, 1, -1, 0, -1]
 
-dx = [0, 0, -1, 1, -1, 1, 1, -1]
-dy = [-1, 1, 0, 0, -1, 1, -1, 1]
-# 상 하 좌 우 좌상 우하 우상 좌하
+n, m = map(int, input().split())
+graph = [list(map(int, input().split())) for _ in range(n)]
 
-def bfs():
-    queue = deque()
+q = deque()
+for i in range(n):
+    for j in range(m):
+        if graph[i][j] == 1: # 상어의 위치
+            q.append([i, j])
+result = 0
 
-    # 상어의 위치를 deque에 추가
-    for i in range(n):
-        for j in range(m):
-            if ocean[i][j] == 1:
-                queue.append((i, j))
+while q:
+    x, y = q.popleft()
+    for d in range(8):
+        nx = x + dx[d]
+        ny = y + dy[d]
 
-    
+        if nx < 0 or ny < 0 or nx >= n or ny >= 0: # 그래프 밖 처리
+            continue
+        if graph[nx][ny] != 0: # 방문한 그래프 및 상어가 있는 곳곳 처리
+            continue
+        q.append([nx, ny])
+        graph[nx][ny] = graph[x][y] + 1
+        result = max(result, graph[x][y] + 1)
+print(result - 1)
 
-    
 
 
 
 
-# 좌표 내에 존재하는 1의 개수만큼 루프를 돌려서 좌우로 1씩 증가하게 만들기
-# 상하는 매번 거리를 1로 초기화하기? <<< 최대거리가 갱신되지 않아 어려울 수 있다
+n, m = map(int, input().split())
+ocean = [list(map(int, input().split())) for _ in range(n)]
 
+dx = [-1, -1, -1, 0, 1, 0, 1, 1]
+dy = [-1, 0, 1, 1, 1, -1, 0, -1]
 
+queue = deque()
+
+# 상어의 위치를 deque에 추가
+for i in range(n):
+    for j in range(m):
+        if ocean[i][j] == 1:
+            queue.append([i, j])
+
+result = 0
+
+while queue:
+    x, y = queue.popleft()
+    for d in range(8): # 상하좌우/대각선
+        nx = x + dx[d]
+        ny = y + dy[d]
+    if nx < 0 or ny < 0 or nx >= n or ny >= m: # 그래프 밖 무시
+        continue
+    if ocean[nx][ny] != 0: # 방문하지 않았던 곳만 검사
+        continue
+    queue.append([nx, ny])
+    ocean[nx][ny] = ocean[x][y] + 1
+    result = max(result, ocean[x][y] + 1)
+
+print(result-1)
