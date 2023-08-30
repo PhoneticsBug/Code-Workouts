@@ -1,0 +1,33 @@
+# Weather Observation Station 20
+
+A median is defined as a number separating the higher half of a data set from the lower half. Query the median of the Northern Latitudes (LAT_N) from STATION and round your answer to  decimal places.
+
+### Input Format
+
+The STATION table is described as follows:
+
+<img src="https://s3.amazonaws.com/hr-challenge-images/9336/1449345840-5f0a551030-Station.jpg">
+
+where LAT_N is the northern latitude and LONG_W is the western longitude.
+
+#### Oracle Answer
+```ORACLE
+SELECT 
+    ROUND(MEDIAN(LAT_N), 4)
+FROM 
+    STATION;
+```
+
+#### MySQL Answer
+```SQL
+SELECT 
+    ROUND(LAT_N, 4)
+FROM (
+    SELECT 
+        LAT_N, 
+        PERCENT_RANK() OVER (ORDER BY LAT_N) percent
+    FROM 
+        STATION
+) AS sub
+WHERE percent = 0.5
+```
