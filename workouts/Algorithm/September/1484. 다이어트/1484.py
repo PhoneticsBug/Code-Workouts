@@ -6,34 +6,9 @@
 # g kg = 현재 몸무게의 제공ㅂ에서 기억하고 있던 몸무게의 제곱을 뺀 값
 
 import sys
-import math
 input = sys.stdin.readline
 
 g = int(input())
-
-ans = []
-t = 1
-
-mini, maxi = math.floor(g**0.5), math.floor(g**0.5)+1
-
-while True:
-    if maxi >= 100000:
-        break
-    if maxi**2 - (maxi-1)**2 > g:
-        break
-    for i in range(1, maxi):
-        if maxi**2 - i**2 == g:
-            ans.append(maxi)
-    t += 1
-    maxi *= t
-ans = sorted(list(set(ans)))
-
-if len(ans) == 0:
-    print(-1)
-else:
-    print(*ans, sep='\n')
-
-
 left, right = 1, 1
 result = []
 
