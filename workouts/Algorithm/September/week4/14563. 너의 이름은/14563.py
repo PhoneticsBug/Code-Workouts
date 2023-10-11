@@ -6,7 +6,7 @@ N, K, Q = map(int, input().split())
 unread = set(chr(ord('A') + i) for i in range(N))
 unread.remove('A') # A는 항상 첫번째 문자를 읽으므로
 
-# K번만큼 메시지를 읽지 않은 사람의 수 R, 송신자의 이름P
+# K번만큼 메시지를 읽지 않은 사람의 수 R, 송신자의 이름 P
 messages = [[0, 0]] + [input().split() for _ in range(K)]
 res = []
 
