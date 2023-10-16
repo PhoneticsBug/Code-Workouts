@@ -4,8 +4,8 @@ input = sys.stdin.readline
 n = int(input())
 
 if int(str(n)[-1]) % 2 != 0 or int(str(n)[-1]) % 5 != 0:
-    # 나머지를 저장하는 set 생성
-    remainder_set = set()
+    # 나머지를 저장하는 set 생성 // 메모리 용량이 넉넉하면 defaultdict 쓰는게 나을 수 있음
+    remainder_set = set() 
     remainder = 0
 
     # 길이가 n+1인 '1'로만 이루어진 숫자까지 검사
@@ -30,3 +30,11 @@ else:
 
 # 11 초과의 1로만 이루어진 모든 숫자는 자연수로 나누어 떨어진다
 # 이 때 11...11 의 길이 k는 n+2보다 크거나 같다.
+
+
+# 메모리 용량이 넉넉하면 defaultdict 쓰는게 나을 수 있음
+
+# remainder_set = defaultdict(lambda: False)
+# remainder_set[remainder] = remainder
+# if remainder_set[remainder]:
+# O(1) 복잡도

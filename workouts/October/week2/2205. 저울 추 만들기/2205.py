@@ -4,7 +4,6 @@ input = sys.stdin.readline
 n = int(input())
 
 def solution(n):
-
     square = [2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384]
     zinc = [1] + [0 for i in range(0,n)]
 
