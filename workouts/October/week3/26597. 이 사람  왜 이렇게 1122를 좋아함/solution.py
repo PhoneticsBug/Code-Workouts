@@ -2,29 +2,37 @@ import sys
 input = sys.stdin.readline
 
 Q = int(input())
-start, end = int(-1 * 1e18) , int(1e18) + 1
+start, end = -10**18, 10**18
 answer = "Hmm..."
 count = 0
+guesses = list(input().split() for _ in range(Q))
 
 for i in range(1, Q+1):
-    num, updown = input().split()
-    num = int(num)
+    num, updown = int(guesses[i-1][0]), guesses[i-1][1]
+
     if updown == "^":
-        start = max(num, start)
+        if num < start:
+            continue
+        if num < end:
+            start = num + 1
+        else:
+            answer = "Paradox!"
+            count = i
+            break
 
     elif updown == "v":
-        end = min(num, end)
+        if num > end:
+            continue
+        if num > start:
+            end = num - 1 
+        else: 
+            answer="Paradox!"
+            count=i 
+            break
 
-    diff = end - start
+    if start == end and answer == "Hmm..." :
+        answer, count= 'I got it!', i 
 
-    if diff < 2:
-        answer = "Paradox!"
-        count = i
-        break
-    elif diff == 2 and count == 0:
-        count = i
-        answer = "I got it!"
-        
 
 print(answer)
 if count > 0:
