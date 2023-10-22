@@ -18,16 +18,19 @@ def solution(n,b, a, gifts):
     
     while right < n:
         if right - left < a:
-            b -= gifts[left]//2
+            b -= gifts[right]//2
             if b < 0:
                 break
             right += 1
         else:
-            b -= gifts[right]
-            if b< 0:
-                break
-            right += 1
+            if a > 0:
+                b -= gifts[left]//2
+                left += 1
+            else:
+                b -= gifts[right]
+                if b< 0:
+                    break
+                right += 1
     return right
-### 고쳐야됨
 
 print(solution(n, b, a, gifts))
