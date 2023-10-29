@@ -7,18 +7,12 @@ input = sys.stdin.readline
 # deque를 사용해서 12345회 안에 이동시키기
 # 각 횟수마다 이동하는 원판의 출발 및 도착지를 저장해서 출력
 
-# def hanoi(saucer, start, end, mid):
-#     if saucer == 1:
-#         print(start, end)
-#         return
-    
-#     hanoi(saucer - 1, start, end, mid)
-#     print(start, end)
-#     hanoi(saucer - 1, mid, end, start)
-
 # 기존의 하노이 탑은 이상적인 모습으로 탑이 쌓여있다.
 # 그러나 이 경우에는 탑의 모양이 무작위임
 # 무작위로 옮길 것이 아니라 올라갈 수 있는 곳에 올려야 한다
+
+# 1 > 3, 2 > 3, 2 > 1 세가지의 경우를 모두 넣어줘서 구현하는 방법이 있음!
+
 
 N = int(input())
 saucers = [list(map(int, input().split())), [], []]
