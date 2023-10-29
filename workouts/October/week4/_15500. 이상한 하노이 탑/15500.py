@@ -16,33 +16,40 @@ input = sys.stdin.readline
 
 N = int(input())
 saucers = [list(map(int, input().split())), [], []]
-move_max = 12345
-count = 0 
+hanoi = [saucers, [], []]
+target_num = N
+cnt = 0
+result = []
 
-# 잘 정렬되고 있는지 체크
-def check(lst):
-    if lst == sorted(lst, reverse=True):
-        return True
-    else:
-        return False
+# 마지막 기둥에 있어야 하는 원판은 고정하는 쪽이 편할거 같다
 
-def hanoi(saucer, start, end, mid):
-    # 탈출 조건 (마지막 기둥에 1을 뺀 모든 원판이 올라감)
-    if len(saucer[2]) + 1 == N:
-        print(start, end)
-        return
-    
-    
-    
-    if check(saucer[1] + [saucer[0][-1]]):
-        saucer[1] = saucer[1] + [saucer[0][-1]]
-        saucer[0] = saucer[0][::-1]
-        
-        hanoi()
-    
-    hanoi(saucer - 1, start, end, mid)
-    print(start, end)
-    hanoi(saucer - 1, mid, end, start)
+while target_num > 0: 
 
+    # 첫번째 기둥에 있다면
+    if target_num in hanoi[0]:
+        while hanoi[0]:
+            now = hanoi[0].pop() # 가장 마지막 숫자를 꺼내서 now에 저장
+            if now == target_num:
+                result.append("1 3")
+                cnt += 1
+                break
+            else:
+                result.append("1 2") # 두번째 스택으로 이동
+                cnt += 1
+                hanoi[1].append(now)
+    
+    # 두번째 기둥에 있다면
+    elif target_num in hanoi[1]:
+        while hanoi[1]:
+            now = hanoi[1].pop() # 마지막 숫자를 꺼내서 저장
+            if now == target_num:
+                result.append("2 3")
+                cnt += 1
+                break
+            else:
+                result.append("2 1")
+                cnt += 1
+                hanoi[0].append(now)
 
-hanoi(N, 1, 3, 2)
+print(cnt)
+print("\n".join(result))
