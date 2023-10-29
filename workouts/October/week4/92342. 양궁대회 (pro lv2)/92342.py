@@ -50,3 +50,40 @@ def solution(n, info):
 # info의 i 번째 원소는 10 - i점을 맞힌 화살의 개수
 # 화살이 남는 경우 전부 0점에 몰아주면 됨
 
+def solution(n, info):
+
+    # 어피치의 총 점수, 과녁별 실질적으로 얻을 수 있는 점수
+    appeach = sum([10-i for i in range(10) if info[i]])
+    score = [(10-i)*2 if info[i] else 10-i for i in range(10)]
+
+    queue = [[0]]
+    answer = []
+    # 10점을 쏠 수 있는 경우에 queue에 추가
+    if n >= info[0] + 1:
+        queue.append([info[0] + 1])
+
+    while queue:
+        recent = queue.pop(0)
+        # 모두 쏘거나, 10-1점까지 다 쏜 경우
+        if sum(recent) == n or len(recent) == 10:
+            # 갱신되는 점수와 기존 점수 비교
+            new = sum([score[i] for i in range(len(recent)) if recent[i]])
+            old = sum([score[i] for i in range(len(answer)) if answer[i]])
+
+            # 어피치보다 점수가 높고, 기존보다 높은 경우 점수 업데이트
+            if new > appeach and new >= old:
+                answer = recent
+
+        # 덜 쏜 경우에는 해당 점수를 쏜 경우와 쏘지 않은 경우를 모두 추가
+        elif sum(recent) + info[len(recent)] + 1 <= n:
+            queue.append(recent + [info[len(recent)] + 1])
+            queue.append(recent + [0])
+
+        # 점수가 남아있는데 이미 화살을 다 썼다면, 쏘지 않은 경우만 추가
+        else: 
+            queue.append(recent + [0])
+
+    if not answer:
+        return [-1]
+    
+    return answer + [0]*(10 - len(answer)) + [n - sum(answer)]
