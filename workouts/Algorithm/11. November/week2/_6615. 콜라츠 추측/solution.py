@@ -1,3 +1,6 @@
+# while문 두개를 사용해보기 (두 수를 나눠서 while문을 사용해보기)
+# A 수열을 구한 다음 B 수열을 만들면서 비교
+
 import sys
 input = sys.stdin.readline
 
