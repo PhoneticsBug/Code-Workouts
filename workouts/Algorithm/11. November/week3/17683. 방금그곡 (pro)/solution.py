@@ -10,6 +10,7 @@ input = sys.stdin.readline
 
 m = "CC#BCC#BCC#BCC#B"
 musicinfos = ["03:00,03:30,FOO,CC#B", "04:00,04:08,BAR,CC#BCC#BCC#B"]
+
 def process_sharp(note):
     return note.replace('A#', 'a').replace('C#', 'c').replace('D#', 'd').replace('F#', 'f').replace('G#', 'g')
 

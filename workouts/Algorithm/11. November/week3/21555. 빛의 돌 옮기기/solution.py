@@ -35,5 +35,28 @@ for i in range(n):
 
 print(cost)
 
-# 5점, 어떻게 하면 되는지 잘 모르겠다... 
-        
+#### 용일님 코드
+
+import sys
+
+input = sys.stdin.readline
+
+A, B = 0, 1
+
+
+def solution():
+    N, K = map(int, input().split())
+    As = list(map(int, input().split()))
+    Bs = list(map(int, input().split()))
+
+    costs = [[0] * N for _ in range(2)]
+
+    for i in range(N):
+        costs[A][i] = min(costs[A][i - 1], costs[B][i - 1] + K) + As[i]
+        costs[B][i] = min(costs[A][i - 1] + K, costs[B][i - 1]) + Bs[i]
+
+    print(min(costs[A][-1], costs[B][-1]))
+
+
+if name == "main":
+    solution()
