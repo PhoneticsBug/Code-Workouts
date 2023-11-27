@@ -13,3 +13,4 @@ def solution(n, mountains):
         dp[i] = float('inf')
         for j in range(i):
             dp[i] = min()
+

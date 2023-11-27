@@ -40,9 +40,5 @@ def solution(bridge_length, weight, truck_weights):
 
     return time
 
-# 지금 문제
-# bridge가 비어있을 때 바로 차량이 진입하지 않음
-# deque가 비어있으면 차량이 이동하지 않음
-
 print(solution(bridge_length, weight, truck_weights))
 
