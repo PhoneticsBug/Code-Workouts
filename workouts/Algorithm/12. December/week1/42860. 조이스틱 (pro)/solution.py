@@ -5,38 +5,25 @@ input = sys.stdin.readline
 name = input()
 
 def solution(name):
-    move = list(ascii_uppercase)
-    target = "A" * len(name)
-    cursor = True # if True: right, if False: left
-    cnt = 0
+    alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+    spell_move = 0 # 알파벳 변경 횟수
+    cursor_move = len(name) - 1 # 커서 이동 횟수
 
-    for i, char in enumerate(name): # name[i](인덱스로 찾아야됨)에서 target[i]를 뺀 것과 name[-1] - name[i] + target[i] 사이에서 비교
-        # cnt += min( (move.index(name[i]) - move.index(target[i])), (len(move) - move.index(name[i]) + move.index(target[i])) )
-        # 이전 커서가 우측을 향하고 있었다면
-        if cursor: 
-            nextmove = [move.index(name[i]) - move.index(target[i]), len(move) - move.index(name[i]) + move.index(target[i])]
-            if nextmove[0] > nextmove[1]:
-                cursor = False
-                cnt += nextmove[1]
-                cnt += 1
-            else: 
-                cnt += nextmove[0]
+    for i, spell in enumerate(name):
+        # 왼쪽으로 이동할지 오른쪽으로 이동할지 확인 (26 == len(alphabet))
+        spell_move += min(alphabet.index(spell), 26 - alphabet.index(spell))
 
-        # 이전에 왼쪽으로 이동했었다면
-        else:
-            nextmove = [move.index(name[i]) - move.index(target[i]), len(move) - move.index(name[i]) + move.index(target[i])]
-            if nextmove[0] < nextmove[1]:
-                cursor = True
-                cnt += nextmove[0]
-                cnt += 1
-            else: 
-                cnt += nextmove[1]
+        # 해당 알파벳 다음부터 연속된 A 문자열 찾기 (좌우 이동 고려)
+        next = i + 1
+        # 다음 글자가 마지막 글자가 아닌 동시에 'A'인 경우에는
+        while next < len(name) and name[next] == 'A':
+            next += 1 # 하나씩 증가
 
+        # 업데이트 값
+        # 1. 지금까지의 이동횟수
+        # 2. 현재까지 이동한 거리에서 뒤로 돌아가서 다시 앞으로 이동하는 경우 (2 곱함)
+        # 3. 남은 문자열을 뒤에서부터 쭉 이동하는 경우
+        cursor_move = min(cursor_move, 2*i + len(name) - next, i+2*(len(name) - next))
 
-    return cnt
+    return spell_move + cursor_move
 
-
-# a b c d e f g h i j k l m n o p q r x y z
-
-# 이전 커서가 왼쪽 방향이었는지 오른쪽 방향이었는지까지 확인해줘야 함
-# AAA 일때 JAA > JEE > JET 같이 뒷부분이 모두 한번에 바뀌어야 파악하기 편함
