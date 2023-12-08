@@ -5,22 +5,38 @@ from heapq import heappop, heappush
 
 jobs = [[0, 3], [1, 9], [2, 6]]
 
+
 def solution(jobs):
-    count, last, answer = 0, -1, 0
+    time, task = 0, 0
+    length = len(jobs)
+    jobs.sort(key = lambda x: x[1])
+
+    while len(jobs) > 0:
+        for i in jobs:
+            if i[0] <= time:
+                jobs.remove(i)
+                time += i[1] - 1
+                task += time - i[0] + 1
+                break
+        time += 1
+    return task // length
+    
+
+def solution(jobs):
+    answer, now, cnt = 0, 0, 0
+    start = -1
     heap = []
-    jobs.sort()
-    time = jobs[0][0]
-    while count < len(jobs):
-        # 현재 시간 이하의 모든 요청을 heap에 추가
-        for s, t in jobs:
-            if last < s <= time:
-                heappush(heap, (t, s))
-        # heap에 이미 작업이 있는 경우 (옮기는 중일 때)
+
+    while cnt < len(jobs):
+        for i in jobs:
+            if start < i[0] <= now:
+                heappush(heap, [i[1], i[0]])
         if len(heap) > 0:
-            count += 1 # 기다리는 시간 추가
-            last = term, start = heappop(heap)
-            time += term
-            answer += (time - start)
+            current = heappop(heap)
+            start = now
+            now += current[0]
+            answer += (now - current[1])
+            cnt += 1
         else:
-            time += 1
+            now += 1
     return answer // len(jobs)
