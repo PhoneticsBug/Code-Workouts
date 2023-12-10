@@ -1,35 +1,39 @@
 import sys
 input = sys.stdin.readline
 
-dic_num = int(input())
-dic = [str(input()) for _ in range(dic_num)]
-sent_num = int(input())
-sent = [str(input()) for _ in range(sent_num)]
+# 애너그램이 맞는지 확인할 수 있도록 정렬된 값을 반환
+def get_word(word):
+    length = len(word)
+    key = str(length) + word[0] + word[length - 1] + ''.join(sorted(word[1:-1]))
+    return key
 
-def words(dic, sent):
-    # 문장의 각 단어마다 단어 길이로 한번 체크
-    # 길이가 같은 경우 정렬한 값이 같은지 체크
-    # 애너그램이 가능한 경우만 모아서 숫자를 별도로 저장
-    # 1 * a * b *c * d . . . 같은 형식으로 하면 좋을듯?
-    group = {}
+# 딕셔너리에 단어 저장
+n = int(input())
+dic = dict()
+for _ in range(n):
+    arr = list(input().rstrip())
+    key = get_word(arr)
 
-    for word in dic:
-        key = (word[0], word[-1])
-        if key not in group:
-            group[key] = []
-        group[key].append(word)
+    if dic.get(key) is not None:
+        dic[key] += 1
+    else:
+        dic[key] = 1
 
+# 문장 입력 후 단어마다 체크해서 출력
+m = int(input())
+for _ in range(m):
+    arr = list(input().rstrip().split())
     result = 1
+    check = 0
+    
+    for i in arr:
+        key = get_word(i)
 
-    for word in sent.split():
-        key = (word[0], word[-1])
-        if key in group:
-            group_words = group[key]
-            cnt = len(set(word[1:-1]))
-            result *= len(group_words * cnt)
+        if dic.get(key) is not None:
+            result *= dic[key]
+            check += 1
 
-    return result
-
-for sentence in sent:
-    result = words(dic, sentence)
-    print(result)
+    if not check:
+        print(0)
+    else:
+        print(result)
