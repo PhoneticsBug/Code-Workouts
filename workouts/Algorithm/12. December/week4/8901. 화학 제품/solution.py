@@ -32,31 +32,26 @@ for _ in range(t):
  ####################################################
     
 import sys
+input = sys.stdin.readline
+t = int(input()) 
 
-T = int(sys.stdin.readline())  # 테스트 케이스의 수를 입력 받음
-for _ in range(T):
-    a, b, c = map(int, sys.stdin.readline().split())  # 각 화학 물질의 수량을 입력 받음
-    abP, bcP, caP = map(int, sys.stdin.readline().split())  # 각 화학 제품의 가격을 입력 받음
+for _ in range(t):
+    a, b, c = map(int, input().split())
+    ab, bc, ca = map(int, input().split())
 
-    maxPrice = 0  # 최대 이익을 저장할 변수
+    result = 0
 
-    # AB를 만드는 수량을 0부터 min(a, b)까지 반복
-    for abNum in range(min(a, b)+1):
-        # 남은 b와 c 중 작은 값만큼 BC를 만듦
-        bcNum = min(b - abNum, c)
-        # 남은 c와 a 중 작은 값만큼 CA를 만듦
-        caNum = min(c - bcNum, a - abNum)
+    for ing1 in range(min(a, b) + 1):
+        ing2 = min(b - ing1, c)
+        ing3 = min(c - ing2, a - ing1)
 
-        # 현재 만든 화학 제품들로 얻을 수 있는 이익을 계산하고, 이가 최대 이익이라면 저장
-        maxPrice = max(maxPrice, abNum * abP + bcNum * bcP + caNum * caP)
+        # 1차 약품 제작
+        result = max(result, ing1*ab + ing2*bc + ing3*ca)
 
-        # 남은 c와 a 중 작은 값만큼 CA를 만듦
-        caNum = min(c, a - abNum)
-        # 남은 b와 c 중 작은 값만큼 BC를 만듦
-        bcNum = min(b - abNum, c - caNum)
+        # 2-3차 약품 제작
+        ing3 = min(c, a - ing1)
+        ing2 = min(b - ing1, c - ing3)
 
-        # 현재 만든 화학 제품들로 얻을 수 있는 이익을 계산하고, 이가 최대 이익이라면 저장
-        maxPrice = max(maxPrice, abNum * abP + bcNum * bcP + caNum * caP)
+        result = max(result, ing1*ab + ing2*bc + ing3*ca)
 
-    # 최대 이익 출력
-    print(maxPrice)
+    print(result)
