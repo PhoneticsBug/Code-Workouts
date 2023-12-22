@@ -41,6 +41,7 @@ for _ in range(t):
 
     result = 0
 
+    # 가장 많은 수익을 내는 조합을 먼저 선택한 후 나머지 값들을 더함
     for ing1 in range(min(a, b) + 1):
         ing2 = min(b - ing1, c)
         ing3 = min(c - ing2, a - ing1)
