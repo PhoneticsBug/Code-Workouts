@@ -1,32 +1,32 @@
-# import sys
-# from itertools import permutations
+import sys
+from itertools import permutations
 
-# input = sys.stdin.readline
+input = sys.stdin.readline
 
-# n = int(input())
-# arr = list(map(int, input().split()))
+n = int(input())
+arr = list(map(int, input().split()))
 
-# arrs = list(permutations(arr))
+arrs = list(permutations(arr))
 
-# def check(a, b):
-#     if (a + b) % 3 == 0:
-#         return False
-#     return True
+def check(a, b):
+    if (a + b) % 3 == 0:
+        return False
+    return True
 
-# to_remove = []
+to_remove = []
 
-# for ar in arrs:
-#     # 바로 다음 요소와의 합 확인
-#     for i in range(len(ar) - 1):
-#         if not check(ar[i], ar[i+1]):
-#             to_remove.append(ar)
-#             break  # 중복 삭제 방지
+for ar in arrs:
+    # 바로 다음 요소와의 합 확인
+    for i in range(len(ar) - 1):
+        if not check(ar[i], ar[i+1]):
+            to_remove.append(ar)
+            break  # 중복 삭제 방지
 
-# # 임시 리스트에 저장된 요소 삭제
-# for item in to_remove:
-#     arrs.remove(item)
+# 임시 리스트에 저장된 요소 삭제
+for item in to_remove:
+    arrs.remove(item)
 
-# print(*arrs[0])
+print(*arrs[0])
 
 ###############################################################################################
 
