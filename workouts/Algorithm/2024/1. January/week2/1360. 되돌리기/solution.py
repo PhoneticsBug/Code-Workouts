@@ -24,33 +24,43 @@ for _ in range(n):
 
 print(history[-1][0])
 
+# 일부만 맞춰서 잘 안됨
+
 # =======================================================================================
 
-### 이거 보고 수정하기
 import sys
 input = sys.stdin.readline
 
 n = int(input())
-hist = []
-now = ''
+history = []
+word = ""
 
 for _ in range(n):
-    flag = False
+    isUndo = False
     command, char, time = map(str, input().split())
-    if command == "type":
-        now += char
-        hist.append([int(time), now])
-    else:
-        char, time = int(char), int(time)
-        for i in range(len(hist) - 1, -1, -1):
-            if hist[i][0] >= (time - char):
-                continue
-            flag = True
-            now = hist[i][1]
-            hist.append([time, now])
-            break
-        if not flag:
-            now = ''
-            hist.append([time, now])
 
-print(hist[-1][1])
+    # 입력해야 하는 경우 > word를 갱신하고 hist에 저장
+    if command == "type":
+        word += char 
+        history.append([int(time), word])
+
+    # undo 명령어인 경우에는
+    else:
+        char, time = int(char), int(time) # int형으로 변환
+
+        for i in range(len(history)-1, -1, -1): # 역순으로 확인
+            # word를 바꿀 수 없는 경우 (되돌리는 시간이 입력값의 위치만큼 가지 못함)
+            if history[i][0] >= (time - char):
+                continue
+            
+            isUndo = True
+            # 해당하는 시간대의 문자열로 회귀
+            word = history[i][1]
+            history.append([time, word])
+            break
+        # undo되지 않은 경우
+        if not isUndo:
+            word = ""
+            history.append([time, word])
+
+print(history[-1][1])
