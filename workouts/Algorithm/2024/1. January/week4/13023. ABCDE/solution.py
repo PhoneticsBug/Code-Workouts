@@ -10,35 +10,40 @@
 import sys
 input = sys.stdin.readline
 
+# 사람의 수 n, 간선의 수 m
 n, m = map(int, input().split())
-dp = [[] for _ in range(n)]
+friends = [[] for _ in range(n)]
 
+# friends 갱신 (양방향 그래프)
 for _ in range(m):
     a, b = map(int, input().split())
-    dp[a].append(b)
-    dp[b].append(a)
+    friends[a].append(b)
+    friends[b].append(a)
 
-def dfs(v, depth):
-    answer = 0
-    visited[v] = True
+answer = False
+visited = [False] * 2001 # 사람의 수 (최대값: 2000)
+
+def dfs(idx, depth):
+    global answer
+
+    visited[idx] = True
+    # 깊이가 4에 도달하면 (모두 친구관계가 성립하면) 종료
     if depth == 4:
-        answer = 1
-    for i in dp[v]:
+        answer = True
+        return
+    # 아닌 경우에는 계속 탐색 진행
+    for i in friends[idx]:
         if not visited[i]:
             dfs(i, depth+1)
             visited[i] = False
 
-    return answer
-
-visited = [False] * n
-answer = []
-
 for i in range(n):
-    answer.append(dfs(i, 0))
+    dfs(i, 0)
     visited[i] = False
-
-if sum(answer) == len(answer):
-    print(1)
-else:
+    if answer: # 조건이 성립하면 루프 탈출
+        break
+    
+if answer: 
+    print(1) 
+else: 
     print(0)
-
