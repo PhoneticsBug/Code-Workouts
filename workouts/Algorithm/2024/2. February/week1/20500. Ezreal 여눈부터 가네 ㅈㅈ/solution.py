@@ -10,27 +10,11 @@
 
 # 일단 어떤 경우에도 1자리수는 5가 와야 함
 
-
-import sys
-from itertools import product
-input = sys.stdin.readline
-
-n = int(input())
-
-
-temp = [''.join(p) for p in product('15', repeat=(n)) if p[-1] == '5']
-ans = 0
-for i in temp:
-    if int(i)%15 == 0:
-        ans += 1
-print(ans)
-
-####
-
 # 1과 5로 만들고, 마지막 자리수가 5인 경우 나올 수 있는 나머지의 수는 0, 5, 10임
 # 1. 나머지가 0인 개수는 이전에 나머지가 5인 개수 + 10인 개수
 # 2. 나머지가 5인 개수는 이전에 나머지가 0인 개수 + 10인 개수
 # 3. 나머지가 10인 개수는 이전에 나머지가 0인 개수 + 5인 개수
+
 import sys
 input = sys.stdin.readline
 
